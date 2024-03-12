@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 //importazione medel project
 use App\Models\Project;
 use App\Models\Type;
+use App\Models\Technology;
 
 //Form request
 use App\Http\Requests\StoreProjectRequest;
