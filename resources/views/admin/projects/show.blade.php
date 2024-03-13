@@ -24,14 +24,11 @@
                     <div class="mb-5">
                         <h5>Tecnologies used:</h5>
                         <ul>
-                            @php
-                                $technologies = explode(" ",$project->technologies)
-                            @endphp
-                            @foreach ($technologies  as $technologie)
-                                <li>
-                                    {{ $technologie }}
-                                </li>
-                            @endforeach
+                            @if (!($project->type==null))
+                            {{ $project->type->name}}
+                            @else 
+                            -
+                            @endif
                         </ul>
                     </div>
 

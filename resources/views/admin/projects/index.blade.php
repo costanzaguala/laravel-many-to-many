@@ -21,6 +21,7 @@
                                 <th scope="col">Name</th>
                                 <th scope="col">Languages used</th>
                                 <th scope="col">Start date</th>
+                                <th scope="col">Tecnologie</th>
                                 <th colspan="3" class="text-center"scope="col">Actions</th>
                             </tr>
                         </thead>
@@ -29,6 +30,15 @@
                             <tr>
                                 <th scope="row">{{ $project->name }}</th>
                                 <td>{{ $project->type_id}}</td>
+                                <td>
+                                    @forelse ($project->technologies as $technology)
+                                    <a href="{{ route('admin.technologies.show', ['technology' => $technology->slug]) }}" class="badge rounded-pill text-bg-primary">
+                                            {{ $technology->title }}
+                                        </a>
+                                    @empty
+                                        -
+                                    @endforelse
+                                </td>
                                 <td>
                                     {{ Carbon::createFromFormat('Y-m-d', $project->creation_date)->format('d-m-Y') }}
                                 </td>

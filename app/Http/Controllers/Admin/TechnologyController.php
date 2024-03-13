@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
-
-
 use Illuminate\Http\Request;
 
+use App\Models\Technology;
+use App\Http\Requests\Technology\StoreRequest as StoreTechnologyRequest;
+use Illuminate\Support\Str;
 class TechnologyController extends Controller
 {
     /**
@@ -13,7 +14,8 @@ class TechnologyController extends Controller
      */
     public function index()
     {
-        //
+        $technologies = Technology::all();
+        return view('admin.technologies.index', compact('technologies'));
     }
 
     /**
@@ -21,31 +23,36 @@ class TechnologyController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.technologies.create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreTechnologyRequest $request)
     {
-        //
+        $technologyData = $request->validated();
+        $slug = Str::slug($technologyData['title']);
+        $technologyData['slug']=$slug;
+        $technology = Technology::create($technologyData);
+        return redirect()->route('admin.technologies.index');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Technology $technology)
     {
-        //
+        return view('admin.technologies.show', compact('technology'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(string $slug)
     {
-        //
+        $technology = technology::where('slug', $slug)->firstOrFail();
+        return view('admin.technologies.edit', compact('technology'));    
     }
 
     /**
@@ -53,14 +60,15 @@ class TechnologyController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Technology $technology)
     {
-        //
+        $technology->delete();
+        return redirect()->route('admin.technologies.index');
     }
 }

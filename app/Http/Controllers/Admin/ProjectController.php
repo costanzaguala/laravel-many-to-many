@@ -6,18 +6,16 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-// Models
-//importazione medel project
 use App\Models\Project;
 use App\Models\Type;
 use App\Models\Technology;
 
-//Form request
 use App\Http\Requests\StoreProjectRequest;
 use App\Http\Requests\UpdateProjectRequest;
 
-// Helpers per slug
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
+
 class ProjectController extends Controller
 {
     /**
@@ -26,7 +24,6 @@ class ProjectController extends Controller
     public function index()
     {
         $projects = Project::all();
-
         return view('admin.projects.index', compact('projects'));
     }
 
@@ -36,7 +33,9 @@ class ProjectController extends Controller
     public function create()
     {
         $types = Type::all();
-        return view('admin.projects.create', compact('types'));
+
+        $technologies = Technology::all();
+        return view('admin.projects.create', compact('types', 'technologies'));
     }
 
     /**
@@ -45,21 +44,19 @@ class ProjectController extends Controller
     public function store(StoreProjectRequest $request)
     {   
     
-        $projectData = $request->validated(
-            
-            [
-                'name' => 'required|max:255',
-                'description' => 'nullable|max:5000',
-                'technologies' => 'nullable|string|max:255',
-                'creation_date' => 'required|date',
-            ]
-            
-        );
-        
+        $projectData = $request->validated();
+    
         $slug = Str::slug($projectData['name']);
         $projectData['slug']=$slug;
+  
+    
         $project = Project::create($projectData);
-
+        if (isset($projectData['technologies'])) {
+            foreach ($projectData['technologies'] as $singleTechnologyId) {
+      
+                $project->technologies()->attach($singleTechnologyId);
+            }
+        }
         return redirect()->route('admin.projects.index');
     
     }
@@ -81,7 +78,7 @@ class ProjectController extends Controller
     {
         $types = Type::all();
         $project = Project::where('slug', $slug)->firstOrFail();
-        return view('admin.projects.edit', compact('project','types'));
+        return view('admin.projects.edit', compact('project','types','technologies'));
     }
 
     /**

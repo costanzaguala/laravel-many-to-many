@@ -24,7 +24,8 @@ class StoreProjectRequest extends FormRequest
         return [
             'name' => 'required|max:255',
             'description' => 'nullable|max:5000',
-            'technologies' => 'nullable|string|max:255',
+            'technologies'=>'nullable|array|exists:technologies,id',
+            'type_id' => 'nullable|exists:types,id',
             'creation_date' => 'required|date',
         ];
     }
@@ -32,13 +33,13 @@ class StoreProjectRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'name.required' => 'Questo campo è obbligatorio.',
-            'name.max' => 'Questo campo non può superare i 255 caratteri.',
-            'description.max' => 'Questo campo non può superare i 5000 caratteri.',
-            'technologies.required' => 'Questo campo è obbligatorio.',
-            'technologies.max' => 'Questo campo non può superare i 255 caratteri.',
-            'creation_date.required' => 'Questo campo è obbligatorio.',
-            'creation_date' => 'Inserisci una data di inizio valida.',
+            'name.required' => 'This field is mandatory.',
+            'name.max' => 'You have exceeded th maximum characters.',
+            'description.max' => 'You have exceeded th maximum characters.',
+            'technologies.required' => 'This field is mandatory.',
+            'technologies.max' => 'You have exceeded th maximum characters.',
+            'creation_date.required' => 'This field is mandatory',
+            'creation_date' => 'Insert a valid date.',
         ];
     }
 }

@@ -30,6 +30,12 @@
                         <li class="mb-3">
                             <a class="text-decoration-none" href="{{ route('admin.types.create') }}">Add a type</a>
                         </li>
+                        <li class="mb-3">
+                            <a class="text-decoration-none" href="{{ route('admin.technologies.index') }}">All technologies</a>
+                        </li>
+                        <li class="mb-3">
+                            <a class="text-decoration-none" href="{{ route('admin.technologies.create') }}">Add a technology</a>
+                        </li>                   
                     </ul>
 
                     <form method="POST" action="{{ route('logout') }}">

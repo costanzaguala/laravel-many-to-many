@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Requests\type;
+namespace App\Http\Requests\Technology;
 
 use Illuminate\Foundation\Http\FormRequest;
 
 // Helpers
 use Illuminate\Support\Facades\Auth;
 
-class UpdateRequest extends FormRequest
+class StoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,19 +25,15 @@ class UpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|max:64',
-            'version' => 'nullable|max:64',
-            'description' => 'nullable|max:1000',
+            'title' => 'required|max:255'
         ];
     }
-    //msg personalizzati
-    public function messages(): array
+
+    public function messages()
     {
         return [
-            'name.required' => 'This field is mandatory.',
-            'name.max' => 'You have exceeded th maximum characters.',
-            'version.max' => 'You have exceeded th maximum characters',
-            'description.max' => 'You have exceeded th maximum characters',
+            'title.required' => 'This field is mandatory.',
+            'title.max' => 'You have exceeded th maximum characters.'
         ];
     }
 }
