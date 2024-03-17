@@ -10,7 +10,7 @@
         <div class="col">
             <div class="card">
                 <div class="card-body">
-                    <form action="{{ route('admin.projects.store') }}" method="POST">
+                    <form action="{{ route('admin.projects.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="mb-3">
                            <label for="name" class="form-label">Name of the project<span class="text-danger">*</span></label>
@@ -43,7 +43,16 @@
                                     <label class="form-check-label" for="technology-{{ $technology->id }}">{{ $technology->title }}</label>
                                 </div>
                             @endforeach
-                         </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="cover_img" class="form-label">Upload project image</label>
+                            <input class="form-control" type="file" id="cover_img" name="cover_img">
+                            @error('cover_img')
+                                <div class="alert alert-danger">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+                        </div>
                         <div class="mb-3">
                            <label for="creation_date" class="form-label">Date of project creation<span class="text-danger">*</span></label>
                            <input type="date" class="form-control" id="creation_date" name="creation_date"  required value="{{ old('creation_date') }}">

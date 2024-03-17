@@ -49,6 +49,12 @@ class ProjectController extends Controller
         $slug = Str::slug($projectData['name']);
         $projectData['slug']=$slug;
   
+
+        $coverImgPath = null;
+        if (isset($projectData['cover_img'])) {
+            $coverImgPath = Storage::disk('public')->put('images', $projectData['cover_img']);
+        }
+        $projectData['cover_img'] = $coverImgPath;
     
         $project = Project::create($projectData);
         if (isset($projectData['technologies'])) {

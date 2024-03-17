@@ -26,6 +26,7 @@ class StoreProjectRequest extends FormRequest
             'description' => 'nullable|max:5000',
             'technologies'=>'nullable|array|exists:technologies,id',
             'type_id' => 'nullable|exists:types,id',
+            'cover_img' => 'nullable|image',
             'creation_date' => 'required|date',
         ];
     }

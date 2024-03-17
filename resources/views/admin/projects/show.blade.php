@@ -14,7 +14,11 @@
                     <h1 class="text-center text-success mb-5">
                         Project: {{ $project->name}}
                     </h1>
-
+                    @if ($project->cover_img != null)
+                    <div class="my-3">
+                        <img src="{{ asset('storage/'.$project->cover_img) }}" style="max-width: 500px;">
+                    </div>
+                    @endif
                     <div class="mb-5">
                         <h5>Description:</h5>
 
